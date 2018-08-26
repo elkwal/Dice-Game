@@ -15,26 +15,44 @@ var dice = {
 // All logics for player one
 $(document).ready(function() {
 
-  var totalscore1 = 0;
+  var totalScore1 = 0;
   var dice1 = 0;
   var scores = 0
 
   $("#player1-roll").click(function() {
     dice1 = dice.roll();
+    if (dice1 === 1) {
+      console.log("Player one on hold?: " + playerOneOnHold);
 
-    if (totalscore1 + scores <= 100) {
-      totalscore1 += dice1;
+      scores += (totalScore1 + dice1);
+
+      totalScore1 = 0;
+
+      $("#total-score-1").text(totalScore1);
+      currentPlayer = 2;
+      $("#scores").text(scores);
+
+
+      playerOneOnHold = true;
+      playerTwoOnHold = false;
+
+      $('#player1-roll').prop('disabled', playerOneOnHold);
+      $('#player2-roll').prop('disabled', playerTwoOnHold);
+    }
+
+    if (totalScore1 + scores <= 100) {
+      totalScore1 += dice1;
       $("#round-total-1").text(dice1);
-      $("#total-score-1").text(totalscore1);
+      $("#total-score-1").text(totalScore1);
     } else {
       // Disable all buttons when the winner is declared
       $(':button').prop('disabled', true);
       winner = 1;
 
-      $("#total-score-1").text(totalscore1);
+      $("#total-score-1").text(totalScore1);
       alert("Hooray! Player " + winner + " wins!");
     }
-    console.log(totalscore1)
+    console.log(totalScore1)
   });
 
   $("#player1-hold").click(function() {
@@ -42,16 +60,19 @@ $(document).ready(function() {
     console.log("Player one on hold?: " + playerOneOnHold);
     if (!playerOneOnHold) {
       dice1 = dice
-      scores += totalscore1;
+      scores += totalScore1;
 
-      totalscore1 = 0;
+      totalScore1 = 0;
 
-      $("#total-score-1").text(totalscore1);
+      $("#total-score-1").text(totalScore1);
       currentPlayer = 2;
       $("#scores").text(scores);
     }
     playerOneOnHold = true;
     playerTwoOnHold = false;
+
+    $('#player1-roll').prop('disabled', playerOneOnHold);
+    $('#player2-roll').prop('disabled', playerTwoOnHold);
   });
 });
 
@@ -74,6 +95,22 @@ $(document).ready(function() {
   $("#player2-roll").click(function() {
     number1 = number.roll();
 
+    if (number1 === 1) {
+
+      sum += results;
+      results = 0;
+
+      $("#total-score-2").text(results);
+      console.log("player2-hold")
+      currentPlayer = 1;
+      $("#totalscores").text(sum);
+
+
+      playerOneOnHold = false;
+      playerTwoOnHold = true;
+      $('#player2-roll').prop('disabled', playerTwoOnHold);
+      $('#player1-roll').prop('disabled', playerOneOnHold);
+    }
 
     if (results + sum <= 100) {
       results += number1;
@@ -97,11 +134,14 @@ $(document).ready(function() {
 
       $("#total-score-2").text(results);
       console.log("player2-hold")
-      currentPlayer = 2;
+      currentPlayer = 1;
       $("#totalscores").text(sum);
     }
     playerOneOnHold = false;
     playerTwoOnHold = true;
+
+    $('#player2-roll').prop('disabled', playerTwoOnHold);
+    $('#player1-roll').prop('disabled', playerOneOnHold);
 
 
   });
