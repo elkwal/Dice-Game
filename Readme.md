@@ -11,7 +11,7 @@ The pig dice opens by giving the title of the webpage. It then gives two options
 
 To start using the project use the instructions below:
 
--   `git clone https://github.com/elkwal/dice.git`
+-   `git clone https://elkwal.github.io/dicegame/`
 -   `cd css`
 -   `atom .`
 ### License
